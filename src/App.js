@@ -3,7 +3,6 @@ function App() {
     const str = window.location.href;
     let token = "";
     let isToken = false;
-    console.log(str);
     for (let i = 0; i < str.length; i++) {
       if (str[i] === "&") {
         break;
@@ -19,12 +18,25 @@ function App() {
 
     const base = "https://www.googleapis.com/youtube/v3/channels?";
     const tokenStr = `access_token=${token}&`;
-    const part = "part=snippet,contentDetails,statistics,status";
-    const URL = `${base}${tokenStr}${part}&mine=true&key=AIzaSyBxocfML3lbHXfX5LhHLeAH4ZBrMFOaut8`;
+    const part = "part=snippet,contentDetails&";
+    const URL = `${base}${tokenStr}${part}mine=true&key=AIzaSyBxocfML3lbHXfX5LhHLeAH4ZBrMFOaut8`;
 
     fetch(URL)
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data.items[0]);
+        const playlistId =
+          data.items[0].contentDetails.relatedPlaylists.uploads;
+
+        fetch(
+          `https://www.googleapis.com/youtube/v3/playlistItems?${tokenStr}${part}playlistId=${playlistId}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(playlistId);
+            console.log(data);
+          });
+      });
   };
 
   return (
