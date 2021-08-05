@@ -76,12 +76,15 @@ fetch(
   });
   
   }
-
+const onClickAutenticate =  ()=>{
+  window.location = "https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/youtube.readonly&redirect_uri=https://localhost:3000&response_type=token&client_id=510827311023-etegid0lap83anh9ie0ikvklh7l0t4ue.apps.googleusercontent.com";
+};
   return (
     <div className="App">
-       <a href="https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/youtube.readonly&redirect_uri=https://localhost:3000&response_type=token&client_id=510827311023-etegid0lap83anh9ie0ikvklh7l0t4ue.apps.googleusercontent.com">
+       {/* <a href="https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/youtube.readonly&redirect_uri=https://localhost:3000&response_type=token&client_id=510827311023-etegid0lap83anh9ie0ikvklh7l0t4ue.apps.googleusercontent.com">
         To Youtube authentication ..{" "}
-      </a>
+      </a> */}
+      <button onClick={onClickAutenticate}>Autenticate..</button>
       <br />
       <button onClick={onClickGetToken}>get token</button>
       <br />
@@ -98,3 +101,4 @@ fetch(
 }
 
 export default App;
+
