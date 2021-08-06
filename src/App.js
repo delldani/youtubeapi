@@ -1,8 +1,10 @@
 import React from "react";
 
 function App() {
-
+  const UPLOADEDPLAYLIST =  'UUtB_jCoJFVnxmbo8PSQjA-g';
 const [token,setToken] = React.useState('');
+const CHANELID = 'UCtB_jCoJFVnxmbo8PSQjA-g';
+const APIKEY = 'AIzaSyBxocfML3lbHXfX5LhHLeAH4ZBrMFOaut8';
 
   const onClickGetToken = () => {
     const str = window.location.href;
@@ -23,7 +25,7 @@ const [token,setToken] = React.useState('');
     setToken(tok);
   };
 
-const onClickChanelVids=()=>{
+const onClickChannelVids=()=>{
 
   const base = "https://www.googleapis.com/youtube/v3/channels?";
     const tokenStr = `access_token=${token}&`;
@@ -51,22 +53,6 @@ const onClickChanelVids=()=>{
 
 
 const onClickNewToken = ()=>{
-  
-//   GET /youtube/v3/channels?part=id&mine=true HTTP/1.1
-// Host: www.googleapis.com
-// Authorization: Bearer ACCESS_TOKEN
-
-// POST /o/oauth2/token HTTP/1.1
-// Host: accounts.google.com
-// Content-Type: application/x-www-form-urlencoded
-
-// client_id=21302922996.apps.googleusercontent.com&
-// client_secret=XTHhXh1SlUNgvyWGwDk1EjXB&
-// refresh_token=1/6BMfW9j53gdGImsixUH6kU5RsR4zwI9lUVX-tqf8JXQ&
-// grant_type=refresh_token
-
-// https:// accounts.google.com/
-
 fetch(
   `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${token}`
 )
@@ -79,15 +65,31 @@ fetch(
 const onClickAutenticate =  ()=>{
   window.location = "https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/youtube.readonly&redirect_uri=https://localhost:3000&response_type=token&client_id=510827311023-etegid0lap83anh9ie0ikvklh7l0t4ue.apps.googleusercontent.com";
 };
+
+const onClickChannelVideosNoAuth = ()=>{
+  const part = "part=snippet,contentDetails&";
+  fetch(
+    `https://www.googleapis.com/youtube/v3/search?part=snippet&page&type=video&videoEmbeddable=true&key=AIzaSyBxocfML3lbHXfX5LhHLeAH4ZBrMFOaut8&channelId=${CHANELID}`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    });
+
+};
+
+
   return (
     <div className="App">
       <button onClick={onClickAutenticate}>Autenticate..</button>
       <br />
-      <button onClick={onClickGetToken}>get token</button>
+      <button onClick={onClickGetToken}>show token</button>
       <br />
-      <button onClick={onClickChanelVids}>get channel videos from youtube</button>
+      <button onClick={onClickChannelVids}>get channel videos from youtube with authentication</button>
       <br />
       <button onClick={onClickNewToken}>token info</button>
+      <br />
+      <button onClick={onClickChannelVideosNoAuth}>Public Channel videos with no authentication</button>
       <br />
      
       <h5>
